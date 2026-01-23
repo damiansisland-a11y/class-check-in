@@ -23,13 +23,20 @@
     const usableWidth = Math.max(0, window.innerWidth - padLeft - padRight);
     const usableHeight = Math.max(0, window.innerHeight - padTop - padBottom);
 
-    const scale = Math.min(
-      usableWidth / rect.width,
-      usableHeight / rect.height,
-      1.2
-    );
+const isEmbedded = window.self !== window.top;
 
-    root.style.transform = "scale(" + scale + ")";
+const baseScale = Math.min(
+  availableWidth / designWidth,
+  availableHeight / designHeight
+);
+
+// Slight boost when embedded (e.g. Google Sites / projector view)
+const scale = Math.min(
+  isEmbedded ? baseScale * 1.15 : baseScale,
+  isEmbedded ? 1.5 : 1.2
+);
+
+root.style.transform = "scale(" + scale + ")";
   }
 
   window.addEventListener("load", applyScale);
