@@ -23,25 +23,13 @@
     const usableWidth = Math.max(0, window.innerWidth - padLeft - padRight);
     const usableHeight = Math.max(0, window.innerHeight - padTop - padBottom);
 
-const isEmbedded = window.self !== window.top;
+    const scale = Math.min(
+      usableWidth / rect.width,
+      usableHeight / rect.height,
+      1.2
+    );
 
-// Only boost when the embed area is reasonably wide (desktop/tablet).
-// Prevents cropping on narrow mobile iframes.
-const allowPresentationBoost = isEmbedded && availableWidth >= 900;
-
-const baseScale = Math.min(
-  availableWidth / designWidth,
-  availableHeight / designHeight
-);
-
-const boostedScale = baseScale * 1.15;
-
-const scale = Math.min(
-  allowPresentationBoost ? boostedScale : baseScale,
-  allowPresentationBoost ? 1.5 : 1.2
-);
-
-root.style.transform = "scale(" + scale + ")";
+    root.style.transform = "scale(" + scale + ")";
   }
 
   window.addEventListener("load", applyScale);
