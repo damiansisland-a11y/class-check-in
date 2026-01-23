@@ -1,0 +1,580 @@
+/* =======================================================
+   Base / Page
+   ======================================================= */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+  overflow: hidden;
+
+  background: linear-gradient(
+    135deg,
+    #e0f2fe 0%,
+    #f0fdf4 50%,
+    #fefce8 100%
+  );
+}
+
+/* =======================================================
+   Layout Wrapper
+   ======================================================= */
+
+#scale-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1.5rem 0;
+  box-sizing: border-box;
+}
+
+#feelings-poll-root {
+  width: 900px;
+  padding: 1rem 1.25rem 1.5rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.12),
+    0 4px 10px rgba(0,0,0,0.08);
+  transform-origin: top center;
+}
+
+/* =======================================================
+   Headings / Descriptions
+   ======================================================= */
+
+h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.35rem;
+}
+
+p.description {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* =======================================================
+   Poll Status (You selected…)
+   ======================================================= */
+
+.poll-status {
+  margin: 0.75rem 0 0.25rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.poll-status .highlight {
+  font-weight: 700;
+}
+
+/* =======================================================
+   Setup Bar + Panel
+   ======================================================= */
+
+#setup-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+#open-setup {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+}
+
+#setup-panel {
+  display: none;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
+
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* Sticky header */
+.setup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: sticky;
+  top: 0;
+  background: #f9fafb;
+  z-index: 20;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.setup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.setup-mini-btn.setup-danger-btn {
+  border-color: #ef4444;
+  background: #fff5f5;
+  color: #b91c1c;
+}
+
+.setup-mini-btn.setup-danger-btn:hover {
+  background: #ffecec;
+}
+
+.setup-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: nowrap;
+}
+
+.setup-mini-btn {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.setup-mini-btn:hover {
+  background: #f9fafb;
+}
+
+.setup-close {
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.setup-section {
+  border-top: 1px dashed #e5e7eb;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+.setup-section-title {
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.setup-help {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+/* =======================================================
+   Preset UI
+   ======================================================= */
+
+.preset-row {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0.55rem 0.65rem;
+  margin-bottom: 0.6rem;
+}
+
+.preset-row-title {
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.preset-btn {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  cursor: pointer;
+}
+
+.preset-btn.active {
+  background: #3b82f6;
+  border-color: #2563eb;
+  color: white;
+}
+
+/* =======================================================
+   Feelings Editor
+   ======================================================= */
+
+.feelings-setup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 0.9rem;
+}
+
+.feelings-list {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0.45rem;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.feelings-pill {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem 0.6rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.feelings-pill.active {
+  background: #eff6ff;
+  outline: 2px solid #3b82f6;
+}
+
+.pill-main {
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.pill-sub {
+  font-size: 0.72rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* --- Editor panel (right side) --- */
+
+#feeling-editor-empty {
+  background: #ffffff;
+  border: 1px dashed #d1d5db;
+  border-radius: 12px;
+  padding: 0.9rem;
+  color: #6b7280;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+#feeling-editor {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0.95rem; /* <-- this is the missing padding you’re noticing */
+}
+
+#feeling-editor .editor-row {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+#feeling-editor .editor-row-split {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+#feeling-editor .editor-split {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+#feeling-editor .editor-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+#feeling-editor input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.45rem 0.55rem;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  font-size: 0.8rem;
+  background: #ffffff;
+}
+
+#feeling-editor input[type="color"] {
+  width: 44px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  padding: 0;
+  background: #ffffff;
+}
+
+#feeling-editor .editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+  margin-top: 0.9rem;
+}
+
+#feeling-editor button {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+#feeling-editor button:hover {
+  background: #f9fafb;
+}
+
+/* =======================================================
+   Main Chart + Bar Legend
+   ======================================================= */
+
+.chart-section {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #eee;
+}
+
+.chart-wrapper {
+  width: 260px;
+  flex: 0 0 auto;
+}
+
+.chart-legend {
+  flex: 1;
+  font-size: 0.85rem;
+  min-width: 260px;
+}
+
+.chart-legend-title {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.chart-empty {
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-style: italic;
+  padding: 0.4rem 0;
+}
+
+/* --- Bar rows --- */
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
+  gap: 0.65rem;
+  align-items: center;
+  margin: 0.35rem 0;
+}
+
+.bar-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.bar-emoji {
+  width: 1.2rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.bar-text {
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-track {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  transition: width 450ms ease;
+}
+
+.bar-value {
+  font-size: 0.78rem;
+  color: #111827;
+  white-space: nowrap;
+}
+
+/* Total + reset footer */
+
+.total-votes {
+  margin-top: 0.6rem;
+  font-weight: 600;
+}
+
+.poll-footer {
+  margin-top: 0.35rem;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+  font-style: italic;
+  color: #6b7280;
+}
+
+.poll-reset-btn {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* =======================================================
+   Feelings Grid
+   ======================================================= */
+
+.feelings-grid-wrapper {
+  --btn-h: 132px;
+  --gap: 0.7rem;
+
+  max-height: calc((var(--btn-h) * 2) + var(--gap));
+  overflow-y: auto;
+  margin-top: 1rem;
+  padding-right: 4px;
+}
+
+.feelings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--gap);
+}
+
+.feeling-option {
+  min-height: var(--btn-h);
+  border-radius: 12px;
+  border: 2px solid #ddd;
+  padding: 0.75rem;
+  background: #fafafa;
+  cursor: pointer;
+  text-align: center;
+}
+
+.feeling-label {
+  font-weight: 600;
+}
+
+.feeling-help {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* =======================================================
+   Students Strip
+   ======================================================= */
+
+.students-strip {
+  margin-top: 1.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed #e5e7eb;
+  background: transparent;
+}
+
+.students-strip-title {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.students-row {
+  display: flex;
+  gap: 0.9rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.25rem;
+  align-items: flex-start;
+  background: transparent;
+}
+
+.student {
+  width: 96px;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.student img {
+  width: 80px;
+  height: 80px;
+  border-radius: 999px;
+  border: 3px solid #e5e7eb;
+  object-fit: cover;
+  background: #e5e7eb;
+}
+
+.student-name {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.student-active img {
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+}
+
+/* Student "armed" state: grows slightly when tapped, returns after selection */
+.student img {
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+  transform: scale(1);
+  transform-origin: center;
+}
+
+.student.student-armed img {
+  transform: scale(1.08);
+}
+
+/* =======================================================
+   Footer / Subtle Text
+   ======================================================= */

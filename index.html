@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feelings Poll – PODD Style</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="scale-wrapper">
+    <div id="feelings-poll-root">
+
+      <!-- Teacher setup controls -->
+      <div id="setup-bar">
+        <button id="open-setup" type="button">Class setup</button>
+      </div>
+
+      <div id="setup-panel">
+<div class="setup-header">
+  <strong>Configure class</strong>
+
+  <div class="setup-header-actions">
+    <button id="export-class-pack" type="button" class="setup-mini-btn">Export</button>
+    <button id="import-class-pack" type="button" class="setup-mini-btn">Import</button>
+	<button id="reset-defaults" type="button" class="setup-mini-btn setup-danger-btn">Reset</button>
+
+    <input
+      id="import-class-input"
+      type="file"
+      accept="application/json"
+      style="display:none"
+    />
+
+    <button id="close-setup" type="button" class="setup-close">✕</button>
+  </div>
+</div>
+
+        <!-- Students setup -->
+        <div class="setup-section">
+          <div class="setup-section-title">Students</div>
+
+          <!-- Class presets alongside student controls -->
+          <div class="preset-row" aria-label="Class presets">
+            <div class="preset-row-title">Class presets</div>
+            <div class="preset-buttons" id="class-presets">
+              <button type="button" class="preset-btn active" data-class="0">Class A</button>
+              <button type="button" class="preset-btn" data-class="1">Class B</button>
+              <button type="button" class="preset-btn" data-class="2">Class C</button>
+              <button type="button" class="preset-btn" data-class="3">Class D</button>
+            </div>
+          </div>
+
+          <label class="setup-label">
+            Number of students:
+            <input id="student-count-input" type="number" min="1" max="30" value="7">
+          </label>
+
+          <div id="student-config-rows"></div>
+
+<div class="setup-actions-row">
+  <button id="apply-setup" type="button">Save &amp; build class</button>
+</div>
+        </div>
+
+        <!-- Feelings setup -->
+        <div class="setup-section">
+          <div class="setup-section-title">Feelings buttons</div>
+
+          <!-- Feelings presets in feelings section -->
+          <div class="preset-row" aria-label="Feelings presets">
+            <div class="preset-row-title">Feelings presets</div>
+            <div class="preset-buttons" id="feelings-presets">
+              <button type="button" class="preset-btn active" data-preset="0">Preset 1</button>
+              <button type="button" class="preset-btn" data-preset="1">Preset 2</button>
+              <button type="button" class="preset-btn" data-preset="2">Preset 3</button>
+              <button type="button" class="preset-btn" data-preset="3">Preset 4</button>
+            </div>
+          </div>
+
+          <div class="feelings-setup-grid">
+            <div class="feelings-setup-left">
+              <div class="setup-help">
+                Tip: While this panel is open, click any feeling button on the main screen to edit it here.
+              </div>
+
+              <div class="feelings-list-header">
+                <strong>All feelings</strong>
+
+                <!-- Save moved next to + Add (always accessible) -->
+                <div class="feelings-list-actions">
+                  <button id="add-feeling" type="button" class="setup-mini-btn">+ Add</button>
+                  <button id="save-feelings" type="button" class="setup-primary-btn">Save feelings</button>
+                </div>
+              </div>
+
+              <div id="feelings-list" class="feelings-list" aria-label="Feelings list">
+                <!-- populated by JS -->
+              </div>
+            </div>
+
+            <div class="feelings-setup-right">
+              <div class="editor-title">Edit selected feeling</div>
+
+              <div id="feeling-editor-empty" class="editor-empty">
+                Select a feeling to edit (from the list or by clicking a button).
+              </div>
+
+              <form id="feeling-editor" class="feeling-editor" autocomplete="off" style="display:none;">
+                <div class="editor-row">
+                  <label class="editor-label" for="feeling-emoji">Emoji</label>
+                  <input id="feeling-emoji" type="text" inputmode="text" maxlength="4" placeholder="😊">
+                </div>
+
+                <div class="editor-row">
+                  <label class="editor-label" for="feeling-label">Text</label>
+                  <input id="feeling-label" type="text" maxlength="32" placeholder="Happy">
+                </div>
+
+                <div class="editor-row">
+                  <label class="editor-label" for="feeling-help">Sub-text</label>
+                  <input id="feeling-help" type="text" maxlength="40" placeholder="Feeling good">
+                </div>
+
+                <div class="editor-row editor-row-split">
+                  <div class="editor-split">
+                    <label class="editor-label" for="feeling-colour">Colour</label>
+                    <input id="feeling-colour" type="color" value="#22c55e">
+                  </div>
+
+                  <div class="editor-split">
+                    <label class="editor-label" for="feeling-colour-hex">Hex</label>
+                    <input id="feeling-colour-hex" type="text" inputmode="text" maxlength="7" placeholder="#22c55e">
+                  </div>
+                </div>
+
+                <div class="editor-actions">
+                  <div class="editor-actions-right">
+                    <button id="move-feeling-up" type="button" class="setup-mini-btn">↑</button>
+                    <button id="move-feeling-down" type="button" class="setup-mini-btn">↓</button>
+                    <button id="delete-feeling" type="button" class="setup-danger-btn">Delete</button>
+                  </div>
+                </div>
+
+                <div class="setup-help subtle">
+                  Notes: Changes are saved to this browser only. Labels update everywhere (buttons, chart, and student instructions).
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>GOOD MORNING CLASS! How are you feeling today?</h2>
+      <p class="description">Tap a feeling below. Your choice will be added to our class feelings chart.</p>
+
+      <div class="chart-section">
+        <div class="chart-wrapper">
+          <canvas id="feelings-pie" width="260" height="260" aria-label="Feelings pie chart"></canvas>
+        </div>
+        <div class="chart-legend">
+          <div class="chart-legend-title">Class feelings:</div>
+          <div id="pie-legend-content" class="chart-empty">
+            No votes yet. The chart will appear when someone chooses a feeling.
+          </div>
+          <div class="total-votes">Total votes: <span id="total-votes">0</span></div>
+          <div class="poll-footer">
+            <span>*Poll data stays in this browser only.</span>
+            <button type="button" class="poll-reset-btn" id="reset-feelings-poll">Reset poll</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Centred status text -->
+      <div class="poll-status" aria-live="polite"></div>
+
+      <!-- Buttons below (populated dynamically from JS) -->
+      <div class="feelings-grid-wrapper">
+        <div class="feelings-grid" role="radiogroup" aria-label="Feelings poll">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <!-- Students strip -->
+      <div class="students-strip">
+        <div class="students-strip-title" id="students-strip-instructions">
+          Tap your photo, then tap a feeling – or drag your photo with the mouse:
+        </div>
+        <div class="students-row">
+          <!-- populated dynamically from setup -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
