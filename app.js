@@ -25,15 +25,20 @@
 
 const isEmbedded = window.self !== window.top;
 
+// Only boost when the embed area is reasonably wide (desktop/tablet).
+// Prevents cropping on narrow mobile iframes.
+const allowPresentationBoost = isEmbedded && availableWidth >= 900;
+
 const baseScale = Math.min(
   availableWidth / designWidth,
   availableHeight / designHeight
 );
 
-// Slight boost when embedded (e.g. Google Sites / projector view)
+const boostedScale = baseScale * 1.15;
+
 const scale = Math.min(
-  isEmbedded ? baseScale * 1.15 : baseScale,
-  isEmbedded ? 1.5 : 1.2
+  allowPresentationBoost ? boostedScale : baseScale,
+  allowPresentationBoost ? 1.5 : 1.2
 );
 
 root.style.transform = "scale(" + scale + ")";
